@@ -101,6 +101,18 @@ export class FreeDictionarySynonymProvider extends Base implements SynonymProvid
         }
     }
 
+    uniqueSynonyms(synonyms: Synonym[]): Synonym[] {
+        const seen = {};
+        return synonyms.filter((synonym) => {
+            const k = `${synonym.word}${synonym.partsOfSpeech?.first()}`;
+            if (seen[k]) {
+                return false;
+            }
+            seen[k] = true;
+            return true;
+        });
+    }
+
     /**
      *
      * @param query - The word to look up synonyms for
@@ -120,7 +132,8 @@ export class FreeDictionarySynonymProvider extends Base implements SynonymProvid
             return Promise.reject("Word doesnt exist in this Dictionary");
         }
 
-        const meanings: Meaning[] = (await JSON.parse(result) as DictionaryWord[]).first().meanings;
+        const entry: DictionaryWord = (await JSON.parse(result) as DictionaryWord[]).first();
+        const meanings: Meaning[] = entry.meanings;
         const synonyms: Synonym[] = [];
 
         // The default POS provider seems pretty wonky at the moment,
@@ -134,6 +147,7 @@ export class FreeDictionarySynonymProvider extends Base implements SynonymProvid
                         def.synonyms.forEach(synonym => {
                             nonPOSMatch.push({
                                 word: synonym,
+                                partsOfSpeech: [meaning.partOfSpeech],
                             })
                         })
                     }
@@ -146,12 +160,21 @@ export class FreeDictionarySynonymProvider extends Base implements SynonymProvid
                     def.synonyms.forEach(synonym => {
                         synonyms.push({
                             word: synonym,
+                            partsOfSpeech: [meaning.partOfSpeech],
                         })
                     })
                 }
             })
+            if (meaning.synonyms) {
+                meaning.synonyms.forEach(synonym => {
+                    synonyms.push({
+                        word: synonym,
+                        partsOfSpeech: [meaning.partOfSpeech],
+                    });
+                })
+            }
         })
 
-        return synonyms.concat(nonPOSMatch);
+        return this.uniqueSynonyms(synonyms.concat(nonPOSMatch));
     }
 }

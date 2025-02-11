@@ -5,6 +5,7 @@
 
   import PhoneticComponent from "./phoneticComponent.svelte";
   import MeaningComponent from "./meaningComponent.svelte";
+  import ThesaurusComponent from "./thesaurusComponent.svelte";
   import ErrorComponent from "./errorComponent.svelte";
   import OriginComponent from "./originComponent.svelte";
   import t from "src/l10n/helpers";
@@ -171,6 +172,10 @@
           {#each data.meanings as { definitions, partOfSpeech }}
             <MeaningComponent word={data.word} {partOfSpeech} {definitions} />
           {/each}
+        </div>
+        <div class="container">
+          <h3>{t("Thesaurus")}</h3>
+          <ThesaurusComponent meanings={data.meanings}/>
         </div>
         {#if data.origin}
           <div class="container">
