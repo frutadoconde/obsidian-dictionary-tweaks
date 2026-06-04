@@ -90,6 +90,7 @@ export default {
     "Collapse Results": "Collapse Results",
     'Pronunciation': 'Pronunciation',
     'Meanings': 'Meanings',
+    "Thesaurus": "Thesaurus",
     "Origin": "Origin",
     'New Note': 'New Note',
     "View Error": "View Error",
