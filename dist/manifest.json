@@ -1,0 +1,11 @@
+{
+  "id": "dictionary-tweaks",
+  "name": "Dictionary Tweaks",
+  "version": "1.0.0",
+  "minAppVersion": "1.12.7",
+  "description": "Slightly tweaked and updated version of phibr0's Dictionary plugin.",
+  "author": "phibr0",
+  "authorUrl": "https://github.com/phibr0",
+  "isDesktopOnly": false,
+  "fundingUrl": "https://ko-fi.com/phibr0"
+}

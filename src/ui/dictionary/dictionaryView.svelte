@@ -94,7 +94,7 @@
   })
 </script>
 
-<div class="nav-buttons-container">
+<div class="nav-buttons-container dictionary-nav-container">
   <div
     id="languageModal"
     class="nav-action-button"
